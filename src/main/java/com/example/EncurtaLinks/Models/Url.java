@@ -1,10 +1,12 @@
-package com.example.EncurtaLinks.models;
+package com.example.EncurtaLinks.Models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serial;
@@ -14,7 +16,9 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class UrlModel implements Serializable {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Url implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -26,5 +30,7 @@ public class UrlModel implements Serializable {
     private String url;
 
     private String urlCurta;
+
+    private String novaUrl;
 
 }
