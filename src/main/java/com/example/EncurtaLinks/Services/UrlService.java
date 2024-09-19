@@ -14,6 +14,7 @@ public class UrlService {
     @Autowired
     UrlRepository urlRepository;
 
+
     private String gerarUrl(){
         return UUID.randomUUID().toString().substring(0, 8);
     }
@@ -21,7 +22,7 @@ public class UrlService {
     String urlCurta = gerarUrl();
 
    public String EncurtarUrl(String urlOriginal){
-       Optional<Url> existingUrl = urlRepository.procurarUrl(urlOriginal);
+       Optional<Url> existingUrl = urlRepository.findByUrl(urlOriginal);
 
        if(existingUrl.isPresent())
            return existingUrl.get().getUrlCurta();
@@ -36,7 +37,7 @@ public class UrlService {
    }
 
    public String getUrlOriginal(String urlCurta){
-       Optional<Url> url = urlRepository.procurartUrlCurta(urlCurta);
+       Optional<Url> url = urlRepository.findByUrlCurta(urlCurta);
        return url.map(Url::getUrl).orElseThrow(() -> new RuntimeException("Url nao encontrada"));
    }
 
