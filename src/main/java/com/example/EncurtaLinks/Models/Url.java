@@ -31,6 +31,4 @@ public class Url implements Serializable {
 
     private String urlCurta;
 
-    private String novaUrl;
-
 }
