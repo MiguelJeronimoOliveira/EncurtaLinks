@@ -19,7 +19,7 @@ public class UrlService {
 
         String urlCurta = UUID.randomUUID().toString().substring(0, 4);
 
-        while(urlRepository.existByUrlCurta(urlCurta)){
+        while(urlRepository.existsByUrlCurta(urlCurta)){
             urlCurta = UUID.randomUUID().toString().substring(0, 4);
         }
 

@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface UrlRepository extends JpaRepository<Url, UUID> {
-   boolean existByUrlCurta(String shortUrl);
+   boolean existsByUrlCurta(String shortUrl);
 }
