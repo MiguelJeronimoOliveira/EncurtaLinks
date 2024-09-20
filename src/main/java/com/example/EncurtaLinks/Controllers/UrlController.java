@@ -6,6 +6,7 @@ import com.example.EncurtaLinks.Models.Url;
 import com.example.EncurtaLinks.Repositories.UrlRepository;
 import com.example.EncurtaLinks.Services.UrlService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,11 @@ import java.util.UUID;
 public class UrlController {
 
     private final UrlRepository urlRepository;
+
+    @Autowired
     UrlService urlService;
 
+    @Autowired
     public UrlController(UrlRepository urlRepository) {
         this.urlRepository = urlRepository;
     }
@@ -26,7 +30,7 @@ public class UrlController {
     @PostMapping("/shortenUrl")
     public ResponseEntity<UrlCurtaResponse> ShortenUrl(@RequestBody String urlOriginal, UrlcurtaRequest request, HttpServletRequest servletRequest){
 
-        String urlCurta = urlService.gerarUrl(urlOriginal);
+        String urlCurta = urlService.EncurtarUrl(urlOriginal);
 
         var redirectUrl = servletRequest.getRequestURL().toString().replace("/shortenUrl", urlCurta);
 

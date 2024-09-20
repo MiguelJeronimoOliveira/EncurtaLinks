@@ -11,17 +11,17 @@ import java.util.UUID;
 
 @Service
 public class UrlService {
+
     @Autowired
     UrlRepository urlRepository;
 
 
-    public String gerarUrl(String urlOriginal){
+    private String gerarUrl(){
+        return UUID.randomUUID().toString().substring(0, 5);
+    }
+    String urlCurta = gerarUrl();
 
-        String urlCurta = UUID.randomUUID().toString().substring(0, 4);
-
-        while(urlRepository.existsByUrlCurta(urlCurta)){
-            urlCurta = UUID.randomUUID().toString().substring(0, 4);
-        }
+    public String EncurtarUrl(String urlOriginal){
 
         Url url = new Url();
         url.setUrl(urlOriginal);
@@ -30,6 +30,7 @@ public class UrlService {
 
         return urlCurta;
     }
+
 
 
 
