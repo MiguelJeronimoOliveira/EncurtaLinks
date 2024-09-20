@@ -1,35 +1,37 @@
 package com.example.EncurtaLinks.Controllers;
 
+import com.example.EncurtaLinks.Dtos.UrlCurtaResponse;
+import com.example.EncurtaLinks.Dtos.UrlcurtaRequest;
+import com.example.EncurtaLinks.Models.Url;
+import com.example.EncurtaLinks.Repositories.UrlRepository;
 import com.example.EncurtaLinks.Services.UrlService;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
 public class UrlController {
 
-    private final UrlService urlService;
+    private final UrlRepository urlRepository;
+    UrlService urlService;
 
-    public UrlController(UrlService urlService) {
-        this.urlService = urlService;
+    public UrlController(UrlRepository urlRepository) {
+        this.urlRepository = urlRepository;
     }
 
-    @GetMapping("/urlCurta")
-    public ResponseEntity<String> EncurtarUrl(@RequestBody String urlOriginal){
-        String urlCurta = urlService.EncurtarUrl(urlOriginal);
-        return ResponseEntity.ok(urlCurta);
-    }
 
-    @GetMapping("/{urlCurta}")
-    public ResponseEntity<Void> RetornarParaUrlOriginal(@PathVariable String urlCurta, HttpServletResponse response) throws IOException {
+    @PostMapping("/shortenUrl")
+    public ResponseEntity<UrlCurtaResponse> ShortenUrl(@RequestBody String urlOriginal, UrlcurtaRequest request, HttpServletRequest servletRequest){
 
-        String urlOriginal = urlService.getUrlOriginal(urlCurta);
-        response.sendRedirect(urlOriginal);
-        return ResponseEntity.status(HttpStatus.FOUND).build();
+        String urlCurta = urlService.gerarUrl(urlOriginal);
+
+        var redirectUrl = servletRequest.getRequestURL().toString().replace("/shortenUrl", urlCurta);
+
+
+        return ResponseEntity.ok(new UrlCurtaResponse(redirectUrl));
     }
 
 

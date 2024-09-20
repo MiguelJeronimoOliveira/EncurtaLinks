@@ -15,38 +15,21 @@ public class UrlService {
     UrlRepository urlRepository;
 
 
-    private String gerarUrl(){
-        return UUID.randomUUID().toString().substring(0, 8);
-    }
+    public String gerarUrl(String urlOriginal){
 
-    String urlCurta = gerarUrl();
+        String urlCurta = UUID.randomUUID().toString().substring(0, 4);
 
-   public String EncurtarUrl(String urlOriginal){
-       Optional<Url> existingUrl = urlRepository.findByUrl(urlOriginal);
+        while(urlRepository.existByUrlCurta(urlCurta)){
+            urlCurta = UUID.randomUUID().toString().substring(0, 4);
+        }
 
-       if(existingUrl.isPresent())
-           return existingUrl.get().getUrlCurta();
-
-
-       Url url = new Url();
+        Url url = new Url();
         url.setUrl(urlOriginal);
         url.setUrlCurta(urlCurta);
         urlRepository.save(url);
 
         return urlCurta;
-   }
-
-   public String getUrlOriginal(String urlCurta){
-       Optional<Url> url = urlRepository.findByUrlCurta(urlCurta);
-       return url.map(Url::getUrl).orElseThrow(() -> new RuntimeException("Url nao encontrada"));
-   }
-
-
-
-
-
-
-
+    }
 
 
 
