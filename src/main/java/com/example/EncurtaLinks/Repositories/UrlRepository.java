@@ -9,7 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface UrlRepository extends JpaRepository<Url, UUID> {
-
-   Optional<Url> findByUrlCurta(String shortUrl);
-   Optional<Url> findByUrl(String originalUrl);
+   boolean existByUrlCurta(String shortUrl);
 }
