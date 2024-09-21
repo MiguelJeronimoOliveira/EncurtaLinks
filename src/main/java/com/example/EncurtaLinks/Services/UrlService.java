@@ -31,6 +31,9 @@ public class UrlService {
         return urlCurta;
     }
 
+    public Optional<String> GetUrlOriginal(String urlCurta){
+            return  urlRepository.findByUrlCurta(urlCurta).map(Url::getUrl);
+    }
 
 
 

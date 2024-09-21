@@ -2,18 +2,20 @@ package com.example.EncurtaLinks.Controllers;
 
 import com.example.EncurtaLinks.Dtos.UrlCurtaResponse;
 import com.example.EncurtaLinks.Dtos.UrlcurtaRequest;
-import com.example.EncurtaLinks.Models.Url;
 import com.example.EncurtaLinks.Repositories.UrlRepository;
 import com.example.EncurtaLinks.Services.UrlService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import java.net.URI;
+
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping()
 public class UrlController {
 
     private final UrlRepository urlRepository;
@@ -38,6 +40,20 @@ public class UrlController {
         return ResponseEntity.ok(new UrlCurtaResponse(redirectUrl));
     }
 
+    @GetMapping("{urlCurta}")
+    public ResponseEntity<Void> Redirect(@PathVariable("urlCurta") String urlCurta){
+
+        var url = urlService.GetUrlOriginal(urlCurta);
+
+        if(url.isEmpty()){
+            return  ResponseEntity.notFound().build();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(url.get()));
+
+        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).build();
+    }
 
 
 }
