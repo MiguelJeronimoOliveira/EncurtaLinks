@@ -6,7 +6,6 @@ import com.example.EncurtaLinks.Repositories.UrlRepository;
 import com.example.EncurtaLinks.Services.UrlService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,10 +48,7 @@ public class UrlController {
             return  ResponseEntity.notFound().build();
         }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create(url.get()));
-
-        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(url.get())).build();
     }
 
 
