@@ -33,7 +33,7 @@ public class UrlController {
 
         String urlCurta = urlService.EncurtarUrl(urlOriginal);
 
-        var redirectUrl = servletRequest.getRequestURL().toString().replace("/shortenUrl", urlCurta);
+        var redirectUrl = servletRequest.getRequestURL().toString().replace("/shortenUrl", "/" + urlCurta);
 
 
         return ResponseEntity.ok(new UrlCurtaResponse(redirectUrl));
