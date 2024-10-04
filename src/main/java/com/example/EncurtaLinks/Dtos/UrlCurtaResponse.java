@@ -1,4 +1,4 @@
 package com.example.EncurtaLinks.Dtos;
 
-public record UrlCurtaResponse(String urlOriginal) {
+public record UrlCurtaResponse(String urlCurta) {
 }
